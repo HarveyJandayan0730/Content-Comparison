@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text Comparison</title>
+    <style>
+        .highlight {
+            background-color: yellow;
+        }
+    </style>
+</head>
+<body>
+    <h1>Text Comparison Tool</h1>
+    <textarea id="text1" rows="10" cols="30" placeholder="Enter first text"></textarea>
+    <textarea id="text2" rows="10" cols="30" placeholder="Enter second text"></textarea>
+    <button onclick="compareText()">Compare</button>
+    <div id="result"></div>
+
+    <script>
+        function compareText() {
+            let text1 = document.getElementById('text1').value.trim().toLowerCase();
+            let text2 = document.getElementById('text2').value.trim().toLowerCase();
+
+            // Remove extra spaces
+            text1 = text1.replace(/\s+/g, ' ');
+            text2 = text2.replace(/\s+/g, ' ');
+
+            let resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = '';
+
+            if (text1 === text2) {
+                resultDiv.innerHTML = '<p>The texts are identical.</p>';
+            } else {
+                let diff = getDifference(text1, text2);
+                resultDiv.innerHTML = `<p>The texts are different:</p><p>${diff}</p>`;
+            }
+        }
+
+        function getDifference(text1, text2) {
+            let diff = '';
+            let maxLength = Math.max(text1.length, text2.length);
+
+            for (let i = 0; i < maxLength; i++) {
+                if (text1[i] !== text2[i]) {
+                    diff += `<span class="highlight">${text2[i] || ''}</span>`;
+                } else {
+                    diff += text2[i] || '';
+                }
+            }
+
+            return diff;
+        }
+    </script>
+</body>
+</html>
